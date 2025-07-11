@@ -146,7 +146,7 @@ export default function ShopPage() {
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    alert(`${product.name} added to cart!`);
+    console.log(`${product.name} added to cart!`);
   };
 
   const FilterSidebar = () => (

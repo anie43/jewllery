@@ -9,6 +9,8 @@ import Link from 'next/link';
 export function CartIcon() {
   const { getCartCount } = useCart();
   const cartCount = getCartCount();
+  
+  console.log('CartIcon - Cart count:', cartCount);
 
   return (
     <Button variant="outline" size="icon" className="relative" asChild>

@@ -51,32 +51,15 @@ export default function CartPage() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  
+  const { cartItems: contextCartItems, updateQuantity: contextUpdateQuantity, removeFromCart: contextRemoveFromCart } = useCart();
 
   // Load cart from localStorage on component mount
   useEffect(() => {
-    const savedCart = localStorage.getItem('alankaarika-cart');
-    if (savedCart) {
-      const cartData = JSON.parse(savedCart);
-      // Convert cart IDs to full product objects with quantities
-      const cartWithProducts = cartData.map(item => {
-        const product = products.find(p => p.id === item.id);
-        return {
-          ...product,
-          quantity: item.quantity || 1
-        };
-      }).filter(Boolean);
-      setCartItems(cartWithProducts);
-    }
-  }, []);
+    // Use cart items from context instead of localStorage
+    setCartItems(contextCartItems);
+  }, [contextCartItems]);
 
-  // Save cart to localStorage whenever cartItems changes
-  useEffect(() => {
-    const cartData = cartItems.map(item => ({
-      id: item.id,
-      quantity: item.quantity
-    }));
-    localStorage.setItem('alankaarika-cart', JSON.stringify(cartData));
-  }, [cartItems]);
 
   const updateQuantity = (productId, newQuantity) => {
     if (newQuantity <= 0) {
@@ -84,17 +67,11 @@ export default function CartPage() {
       return;
     }
     
-    setCartItems(prev => 
-      prev.map(item => 
-        item.id === productId 
-          ? { ...item, quantity: newQuantity }
-          : item
-      )
-    );
+    contextUpdateQuantity(productId, newQuantity);
   };
 
   const removeFromCart = (productId) => {
-    setCartItems(prev => prev.filter(item => item.id !== productId));
+    contextRemoveFromCart(productId);
   };
 
   const applyCoupon = () => {

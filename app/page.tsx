@@ -239,8 +239,8 @@ export default function Home() {
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    // Optional: Show a toast notification
-    alert(`${product.name} added to cart!`);
+    // Show a better notification
+    console.log(`${product.name} added to cart!`);
   };
 
   const toggleWishlist = (productId) => {
