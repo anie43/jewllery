@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Link from 'next/link';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
+import { useCart } from '@/components/cart/CartProvider';
 
 // Sample products data (in real app, this would come from context/state management)
 const products = [
